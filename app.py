@@ -9,13 +9,13 @@ from llm import generate_answer
 from config import UPLOAD_DIR, TOP_K
 
 
-# ---------------- PAGE CONFIG ----------------
+
 st.set_page_config(
     page_title="Multi-Modal RAG",
     layout="wide"
 )
 
-# ---------------- LOAD CSS ----------------
+#  LOAD CSS
 def load_css():
     with open("assets/style.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -23,7 +23,7 @@ def load_css():
 load_css()
 
 
-# ---------------- SESSION STATE ----------------
+#  SESSION STATE 
 if "chats" not in st.session_state:
     st.session_state.chats = {}   # chat_id -> messages
 
@@ -31,7 +31,7 @@ if "active_chat" not in st.session_state:
     st.session_state.active_chat = None
 
 
-# ---------------- SIDEBAR ----------------
+
 with st.sidebar:
     st.markdown("## 📂 Documents")
 
@@ -67,7 +67,7 @@ with st.sidebar:
             st.session_state.active_chat = chat_id
 
 
-# ---------------- MAIN AREA ----------------
+#  MAIN 
 if not st.session_state.active_chat:
     st.markdown("""
     <div class="hero-container">
@@ -82,13 +82,13 @@ if not st.session_state.active_chat:
 chat = st.session_state.chats[st.session_state.active_chat]
 
 
-# ---------------- CHAT HISTORY ----------------
+
 for msg in chat:
     with st.chat_message(msg["role"]):
         st.write(msg["content"])
 
 
-# ---------------- USER INPUT ----------------
+#  USER INPUT 
 user_input = st.chat_input("Ask anything about the document...")
 
 if user_input:
@@ -107,14 +107,13 @@ if user_input:
     with st.chat_message("assistant"):
         st.write(answer)
 
-        # ---------- SOURCES ----------
         with st.expander("📌 Sources"):
             for c in retrieved_chunks:
                 st.write(
                     f"Page {c['metadata']['page']} ({c['metadata']['type']})"
                 )
 
-        # ---------- SUMMARY ----------
+        #  SUMMARY 
         if st.button("✨ Summarize Answer"):
             with st.spinner("Summarizing..."):
                 summary_prompt = (
@@ -125,3 +124,4 @@ if user_input:
 
             st.markdown("### 📝 Summary")
             st.write(summary)
+
