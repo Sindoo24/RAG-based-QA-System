@@ -28,7 +28,7 @@ def generate_answer(query, retrieved_chunks):
 
     payload = {
         "model": QWEN_MODEL,
-        "input": prompt,   # /v1/responses expects 'input'
+        "input": prompt,   
         "temperature": 0,
         "max_output_tokens": 500
     }
@@ -37,8 +37,7 @@ def generate_answer(query, retrieved_chunks):
 
     if response.status_code == 200:
         data = response.json()
-        # Debug: see raw output
-        # print(data)
+        
 
         if "output" in data and isinstance(data["output"], list):
             answer_texts = []
@@ -49,3 +48,4 @@ def generate_answer(query, retrieved_chunks):
             return "No output returned from API."
     else:
         return f"Error: {response.status_code} - {response.text}"
+
