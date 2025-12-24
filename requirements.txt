@@ -1,0 +1,10 @@
+streamlit
+PyPDF2
+camelot-py[cv]
+pytesseract
+pillow
+sentence-transformers
+torch
+clip
+chromadb
+requests
